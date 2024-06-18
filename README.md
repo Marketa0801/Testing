@@ -1,2 +1,4 @@
 # Testing
-Repository of my first testing cases
+My first testing cases
+
+Hello world!
