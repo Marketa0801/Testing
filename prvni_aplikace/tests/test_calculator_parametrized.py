@@ -34,3 +34,30 @@ def test_add_parametrize(a,b,expected):
   (0,0,0) ],   )
 def test_add_wrong_parametrize(x,y,expected_result):
     assert calculator.add_wrong(x,y) == expected_result
+
+#Test odčítání
+@pytest.mark.parametrize("c,d,vysledek",
+[(1,2,-1),
+ (0,2,-2),
+ (0,0,0),
+ (-5,-2,-3)
+ ],  )
+def test_subtract(c,d,vysledek):
+    assert calculator.subtract(c,d) == vysledek
+
+#Test násobení
+@pytest.mark.parametrize("e,f,ocekavany_vysledek",
+[(2,3,6),
+ (-2,3,-6),
+ (4,-2,-8),
+ (0,0,0)],                )
+def test_multiply(e,f,ocekavany_vysledek):
+    assert calculator.multiply(e,f) == ocekavany_vysledek
+
+@pytest.mark.parametrize("g,h,result_expected",
+[(2,3,6),
+ (-2,3,-6),
+ (4,-2,-8),
+ (0,0,0)],)
+def test_multiply_wrong(g,h,result_expected):
+    assert calculator.multiply_wrong(g,h) == result_expected
