@@ -19,4 +19,18 @@ def test_log(a,b,c,expected):
 [
     #Koeficient a,b,c musí být ve formátu float nebo int
     ("g",2,1,TypeError,"All coefficients must be of type float or int!"),
-    (1,"h",1,TypeError,"All coefficients must be of type
+    (1,"h",1,TypeError,"All coefficients must be of type float or int!"),
+    (1,2,"i",TypeError,"All coefficients must be of type float or int!"),
+    #Koeficient a se nesmí rovnat 0
+    (0,2,1,SyntaxError,"Cannot solve quadratic formula with a = 0!"),
+    #Koeficient b se nesmí rovnat 5
+    (1,5,6,NameError, "I don't like when b = 5!"),
+    (1,2,3,ValueError, "Cannot solve quadratic formula with negative discriminant!")
+    
+
+]
+)
+def test_logaritmic(a, b, c, expected_exception, expected_msg):
+    with pytest.raises(expected_exception) as exc:
+        quadratic_formula.solve_quadratic_formula(a,b,c)
+    assert str(exc.value) == expected_msg
