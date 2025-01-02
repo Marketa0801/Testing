@@ -1,4 +1,4 @@
-#------------------TEST TLAČÍTKA---------------
+#------------------TEST ODKAZU---------------
 #Testuje, zda hlavní tlačítko na domovské stránce správně přesměruje.
 import pytest
 #pro spuštění voláme % pytest Projekt/test_comax.py
