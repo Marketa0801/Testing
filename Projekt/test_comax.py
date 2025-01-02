@@ -1,21 +1,19 @@
 #------------------TEST ODKAZU---------------
-#Testuje, zda hlavní tlačítko na domovské stránce správně přesměruje.
+#Testuje, zda tlačítko Kontakty z hlavního menu na domovské stránce správně přesměruje.
 import pytest
 #pro spuštění voláme % pytest Projekt/test_comax.py
 
 def test_kontakty(page):
 #Vstup na stránku
-        page.goto("https://www.strechycomax.cz/")  
+    page.goto("https://www.strechycomax.cz/")  
 
-#Zpracování cookies, pokud se objeví. 
-        try:
-            cookies_button = page.locator("text=Souhlasím").first 
-            if cookies_button.is_visible():
-                cookies_button.click()
-        except:
-            pass
-# Kliknutí na odkaz "Kontakty"
-    page.locator("a:has-text('Kontakty')").click()
+# Čekám na prvek, aby byl viditelný a interaktivní
+    contact_link = page.locator("#block-comax-main-menu .menu-item a[href='https://www.strechycomax.cz/kontakt']") # Bylo nutné velmi specifikovat lokátor, jelikož na stránce se text="Kontakt" jich nachází mnoho. 
+    contact_link.wait_for(state="visible", timeout=10000)  
+    
+# Kliknutí na prvek
+    contact_link.click()
 
-# Ověření, přesměrování
-    assert page.url == "https://www.strechycomax.cz/kontakt"
+# Ověření přesměrování
+    page.wait_for_url("https://www.strechycomax.cz/kontakt", timeout=10000)  
+    assert page.url == "https://www.strechycomax.cz/kontakt" 
