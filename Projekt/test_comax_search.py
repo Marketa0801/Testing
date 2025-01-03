@@ -12,7 +12,7 @@ def browser():
         )
         yield browser
         browser.close()
-
+#Oteření a zavření okna
 @pytest.fixture()
 def page(browser):
     page = browser.new_page()
@@ -30,9 +30,24 @@ def test_search(page):
 #Ověření, že vyhledávací pole existuje a bylo nalezeno
     assert search_field.is_visible()
 
-# Zadání klíčového slova do vyhledávacího pole
-    search_field = page.locator("input[id='edit-keys']")
+#Zadání klíčového slova do vyhledávacího pole
+    
     search_field.fill("plechové krytiny")
-# Ověření, že pole obsahuje správné klíčové slovo
+#Ověření, že pole obsahuje správné klíčové slovo
     assert search_field.input_value() == "plechové krytiny"
+# Skrýt překážející prvek
+    page.evaluate("document.querySelector('.search-switcher').style.display = 'none'")
+
+#Lokalizace tlačítka pro odeslání vyhledávání
+    button_locator = page.locator("input[id='edit-submit']")
+    button_locator.wait_for(state="visible")
+# Kliknutí na tlačítko vyhledávání
+    button_locator.click()
+# Čekání na načtení stránky 
+
+    page.wait_for_load_state("load")
+
+# Debug: Po kliknutí na tlačítko udělat screenshot
+    page.screenshot(path="Projekt/after_search_click.png")
+
 
