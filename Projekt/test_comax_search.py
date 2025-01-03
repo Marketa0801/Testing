@@ -19,14 +19,20 @@ def page(browser):
     yield page
     page.close()
 
-def test_search():
+def test_search(page):
 #Vstup na stránku
     page.goto("https://www.strechycomax.cz/") 
-#Cookies
+#Odmítnutí cookies
     refuse_button = page.locator("div.ch2-dialog-actions button.ch2-deny-all-btn", has_text="Jen nezbytné")
     refuse_button.click()
 #Nalezení vyhledávacího pole
     search_field = page.locator("input[id='edit-keys']")
-
 #Ověření, že vyhledávací pole existuje a bylo nalezeno
     assert search_field.is_visible()
+
+# Zadání klíčového slova do vyhledávacího pole
+    search_field = page.locator("input[id='edit-keys']")
+    search_field.fill("plechové krytiny")
+# Ověření, že pole obsahuje správné klíčové slovo
+    assert search_field.input_value() == "plechové krytiny"
+
