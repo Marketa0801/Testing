@@ -21,7 +21,7 @@ def page(browser):
     page.close()
 
 def test_search(page):
-#Testování pro velikost obrazovky mobilního telefonu
+#Zmenšení velikosti obrazovky prohlížeče na velikost obrazovky mobilního telefonu
     page.set_viewport_size({"width": 375, "height": 667})  
 
 #Vstup na stránku
@@ -33,9 +33,11 @@ def test_search(page):
 # Kliknutí na tlačítko pro otevření mobilního menu
     mobile_menu_button = page.locator("#mobile-menu-button")
     mobile_menu_button.click()  
+
 #Kliknutí na "lupičku"
     magnifer_button = page.locator("#block-comax-vyhledavani")
     magnifer_button.click()
+
 #Nalezení vyhledávacího pole
     search_field = page.locator("input[id='edit-keys']")
 #Ověření, že vyhledávací pole existuje a bylo nalezeno
@@ -53,6 +55,19 @@ def test_search(page):
     button_locator.click()
 # Čekání na načtení stránky 
     page.wait_for_load_state("load")
+
+# Čekání na načtení výsledků vyhledávání
+    results_locator = page.locator("div.item-list")  # Přizpůsobte podle skutečného selektoru
+    results_locator.wait_for(state="visible", timeout=10000)
+
+# Ověření, že výsledky obsahují klíčové slovo "plechové krytiny"
+    result_items = page.locator("ol.search-results")  
+    assert result_items.count() > 0  
+
+# Ověření pro každý výsledek, že obsahuje klíčové slovo
+    for item in result_items.all():  
+        item_text = item.text_content()
+        assert "plechové krytiny" in item_text.lower()  
 
 
 
